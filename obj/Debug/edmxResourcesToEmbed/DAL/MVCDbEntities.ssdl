@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MVCDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AuthorMaster">
+    <Key>
+      <PropertyRef Name="AuthorID" />
+    </Key>
+    <Property Name="AuthorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AuthorName" Type="varchar" MaxLength="50" />
+    <Property Name="Dob" Type="date" />
+    <Property Name="EmailAddress" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="BookMaster">
+    <Key>
+      <PropertyRef Name="BookID" />
+    </Key>
+    <Property Name="BookID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookName" Type="varchar" MaxLength="50" />
+    <Property Name="BookPrice" Type="numeric" Precision="10" Scale="2" />
+    <Property Name="AuthorID" Type="int" />
+  </EntityType>
+  <Association Name="FK_BookMaster_AuthorMaster">
+    <End Role="AuthorMaster" Type="Self.AuthorMaster" Multiplicity="0..1" />
+    <End Role="BookMaster" Type="Self.BookMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AuthorMaster">
+        <PropertyRef Name="AuthorID" />
+      </Principal>
+      <Dependent Role="BookMaster">
+        <PropertyRef Name="AuthorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MVCDBModelStoreContainer">
+    <EntitySet Name="AuthorMaster" EntityType="Self.AuthorMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BookMaster" EntityType="Self.BookMaster" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_BookMaster_AuthorMaster" Association="Self.FK_BookMaster_AuthorMaster">
+      <End Role="AuthorMaster" EntitySet="AuthorMaster" />
+      <End Role="BookMaster" EntitySet="BookMaster" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

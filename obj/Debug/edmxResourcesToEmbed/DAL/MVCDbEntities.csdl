@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MVCDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AuthorMaster">
+    <Key>
+      <PropertyRef Name="AuthorID" />
+    </Key>
+    <Property Name="AuthorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AuthorName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Dob" Type="DateTime" Precision="0" />
+    <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="BookMasters" Relationship="Self.FK_BookMaster_AuthorMaster" FromRole="AuthorMaster" ToRole="BookMaster" />
+  </EntityType>
+  <EntityType Name="BookMaster">
+    <Key>
+      <PropertyRef Name="BookID" />
+    </Key>
+    <Property Name="BookID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BookName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BookPrice" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="AuthorID" Type="Int32" />
+    <NavigationProperty Name="AuthorMaster" Relationship="Self.FK_BookMaster_AuthorMaster" FromRole="BookMaster" ToRole="AuthorMaster" />
+  </EntityType>
+  <Association Name="FK_BookMaster_AuthorMaster">
+    <End Role="AuthorMaster" Type="Self.AuthorMaster" Multiplicity="0..1" />
+    <End Role="BookMaster" Type="Self.BookMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AuthorMaster">
+        <PropertyRef Name="AuthorID" />
+      </Principal>
+      <Dependent Role="BookMaster">
+        <PropertyRef Name="AuthorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MVCDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AuthorMasters" EntityType="Self.AuthorMaster" />
+    <EntitySet Name="BookMasters" EntityType="Self.BookMaster" />
+    <AssociationSet Name="FK_BookMaster_AuthorMaster" Association="Self.FK_BookMaster_AuthorMaster">
+      <End Role="AuthorMaster" EntitySet="AuthorMasters" />
+      <End Role="BookMaster" EntitySet="BookMasters" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

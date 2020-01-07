@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MVCDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AuthMaster">
+    <Key>
+      <PropertyRef Name="AuthID" />
+    </Key>
+    <Property Name="AuthID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AuthName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="dob" Type="DateTime" Precision="0" />
+    <Property Name="AuthEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="BookMasters" Relationship="Self.FK_BookMaster_AuthMaster" FromRole="AuthMaster" ToRole="BookMaster" />
+  </EntityType>
+  <EntityType Name="BookMaster">
+    <Key>
+      <PropertyRef Name="BookId" />
+    </Key>
+    <Property Name="BookId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BookName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BookPrice" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="AuthID" Type="Int32" />
+    <NavigationProperty Name="AuthMaster" Relationship="Self.FK_BookMaster_AuthMaster" FromRole="BookMaster" ToRole="AuthMaster" />
+  </EntityType>
+  <Association Name="FK_BookMaster_AuthMaster">
+    <End Role="AuthMaster" Type="Self.AuthMaster" Multiplicity="0..1" />
+    <End Role="BookMaster" Type="Self.BookMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AuthMaster">
+        <PropertyRef Name="AuthID" />
+      </Principal>
+      <Dependent Role="BookMaster">
+        <PropertyRef Name="AuthID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MVCDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AuthMasters" EntityType="Self.AuthMaster" />
+    <EntitySet Name="BookMasters" EntityType="Self.BookMaster" />
+    <AssociationSet Name="FK_BookMaster_AuthMaster" Association="Self.FK_BookMaster_AuthMaster">
+      <End Role="AuthMaster" EntitySet="AuthMasters" />
+      <End Role="BookMaster" EntitySet="BookMasters" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

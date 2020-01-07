@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MVCDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AuthMaster">
+    <Key>
+      <PropertyRef Name="AuthID" />
+    </Key>
+    <Property Name="AuthID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AuthName" Type="varchar" MaxLength="50" />
+    <Property Name="dob" Type="date" />
+    <Property Name="AuthEmail" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="BookMaster">
+    <Key>
+      <PropertyRef Name="BookId" />
+    </Key>
+    <Property Name="BookId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookName" Type="varchar" MaxLength="50" />
+    <Property Name="BookPrice" Type="numeric" Precision="10" Scale="2" />
+    <Property Name="AuthID" Type="int" />
+  </EntityType>
+  <Association Name="FK_BookMaster_AuthMaster">
+    <End Role="AuthMaster" Type="Self.AuthMaster" Multiplicity="0..1" />
+    <End Role="BookMaster" Type="Self.BookMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AuthMaster">
+        <PropertyRef Name="AuthID" />
+      </Principal>
+      <Dependent Role="BookMaster">
+        <PropertyRef Name="AuthID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MVCDBModelStoreContainer">
+    <EntitySet Name="AuthMaster" EntityType="Self.AuthMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BookMaster" EntityType="Self.BookMaster" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_BookMaster_AuthMaster" Association="Self.FK_BookMaster_AuthMaster">
+      <End Role="AuthMaster" EntitySet="AuthMaster" />
+      <End Role="BookMaster" EntitySet="BookMaster" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

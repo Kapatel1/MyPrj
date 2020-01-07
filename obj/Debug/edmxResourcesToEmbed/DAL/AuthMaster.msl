@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MVCDBModel1StoreContainer" CdmEntityContainer="MVCDBEntities1">
+    <EntitySetMapping Name="AuthMasters">
+      <EntityTypeMapping TypeName="MVCDBModel1.AuthMaster">
+        <MappingFragment StoreEntitySet="AuthMaster">
+          <ScalarProperty Name="AuthID" ColumnName="AuthID" />
+          <ScalarProperty Name="AuthName" ColumnName="AuthName" />
+          <ScalarProperty Name="dob" ColumnName="dob" />
+          <ScalarProperty Name="AuthEmail" ColumnName="AuthEmail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
