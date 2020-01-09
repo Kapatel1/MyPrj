@@ -80,9 +80,9 @@
             </td>
             <td>
                 <button class="btn btn-primary" onclick="ActionAway(@item.AuthorID)">Action Event</button>
-                <a href="/BookMasters/Edit/@item.AuthorID" id="@item.AuthorID">Edit</a>|
+                @*<a href="/BookMasters/Edit/@item.AuthorID" id="@item.AuthorID">Edit</a>|
                 @Html.ActionLink("Details", "Details", "BookMasters", new { id = item.BookID }) |
-                @Html.ActionLink("Delete", "Delete", "BookMasters", new { id = item.BookID })
+                @Html.ActionLink("Delete", "Delete", "BookMasters", new { id = item.BookID })*@
             </td>
         </tr>
     }
