@@ -20,7 +20,7 @@ namespace PracticeWebAPP.DAL.Concrete
             return _context.BookMasters.ToList();
         }
 
-        public BookMaster GetBookByID(int id)
+        public BookMaster GetBookByID(int? id)
         {
             return _context.BookMasters.Find(id);
         }

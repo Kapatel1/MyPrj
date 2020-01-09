@@ -19,7 +19,7 @@
             @Html.DisplayNameFor(model => model.BookPrice)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AuthMaster.AuthName)
+            @Html.DisplayNameFor(model => model.AuthorMaster.AuthorName)
         </th>
         <th></th>
     </tr>
@@ -33,12 +33,12 @@
             @Html.DisplayFor(modelItem => item.BookPrice)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AuthMaster.AuthName)
+            @Html.DisplayFor(modelItem => item.AuthorMaster.AuthorName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BookId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BookId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BookId })
+            @Html.ActionLink("Edit", "Edit", new { id=item.BookID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BookID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BookID })
         </td>
     </tr>
 }

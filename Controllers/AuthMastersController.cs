@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using PracticeWebAPP.DAL;
 
 namespace PracticeWebAPP.Controllers
@@ -27,10 +28,53 @@ namespace PracticeWebAPP.Controllers
 
 
         // GET: AuthMasters
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(_IAuthorRepository.GetAuthors().ToList());
-            //return View(db.AuthMasters.ToList());
+            //return View(_IAuthorRepository.GetAuthors().ToList());
+            ////return View(db.AuthMasters.ToList()); ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "AuthorName_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Dob" ? "Dob_desc" : "Date";
+            ViewBag.EmailSortParm = sortOrder == "EmailAddress" ? "EmailAddress_desc" : "EmailAddress";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+            var Authors = _IAuthorRepository.GetAuthors();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                //Authors = Authors.Where(s => s.AuthorName.Contains(searchString)
+                //                       || s.EmailAddress.Contains(searchString));
+                Authors = Authors.Where(x => x.AuthorName.ToLower().Contains(searchString.ToLower()) || x.EmailAddress.ToLower().Contains(searchString.ToLower())).ToList();
+
+            }
+            switch (sortOrder)
+            {
+                case "AuthorName_desc":
+                    Authors = Authors.OrderByDescending(s => s.AuthorName).ToList();
+                    break;
+                case "Dob_desc":
+                    Authors = Authors.OrderBy(s => s.Dob).ToList();
+                    break;
+                case "EmailAddress":
+                    Authors = Authors.OrderByDescending(s => s.EmailAddress).ToList();
+                    break;
+                default:  // Name ascending 
+                    Authors = Authors.OrderBy(s => s.AuthorName).ToList();
+                    break;
+            }
+
+            int pageSize = 1;
+            int pageNumber = (page ?? 1);
+            return View(Authors.ToPagedList(pageNumber, pageSize));
+
 
 
         }

@@ -11,7 +11,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>AuthMaster</h4>
         <hr />
@@ -47,9 +47,70 @@
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
-    </div>
-}
 
+
+    </div>
+
+}
+<table class="table">
+    <tr>
+        <th>
+            Book Name
+        </th>
+        <th>
+            Book Price
+        </th>
+        <th>
+            AuthorName
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.BookMasters)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.AuthorName)
+            </td>
+            <td>
+                <button class="btn btn-primary" onclick="ActionAway(@item.AuthorID)">Action Event</button>
+                <a href="/BookMasters/Edit/@item.AuthorID" id="@item.AuthorID">Edit</a>|
+                @Html.ActionLink("Details", "Details", "BookMasters", new { id = item.BookID }) |
+                @Html.ActionLink("Delete", "Delete", "BookMasters", new { id = item.BookID })
+            </td>
+        </tr>
+    }
+
+</table>
+<div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h3 class="modal-title">Action This Event</h3>
+            </div>
+            <div class="modal-body" id="myModalBodyDiv1">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var ActionAway = function (theid) {
+        var url = "/BookMasters/EditPopup?id=" + theid;
+
+        $('#myModalBodyDiv1').load(url, function () {
+            $('#myModal1').modal("show");
+        })
+    }
+
+</script>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

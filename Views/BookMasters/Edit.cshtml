@@ -1,9 +1,9 @@
 ﻿@model PracticeWebAPP.DAL.BookMaster
 
-@{
+@*@{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+}*@
 
 <h2>Edit</h2>
 
@@ -16,7 +16,7 @@
         <h4>BookMaster</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.BookId)
+        @Html.HiddenFor(model => model.BookID)
 
         <div class="form-group">
             @Html.LabelFor(model => model.BookName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -35,10 +35,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AuthID, "AuthID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.AuthorID, "AuthID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("AuthID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AuthID, "", new { @class = "text-danger" })
+                @Html.DropDownList("AuthID", (ViewBag.AuthID as SelectList), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AuthorID, "", new { @class = "text-danger" })
             </div>
         </div>
 
